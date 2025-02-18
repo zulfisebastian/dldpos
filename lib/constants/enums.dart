@@ -1,0 +1,16 @@
+enum NFCModeType {
+  Pay,
+  TopUp,
+  TransferFrom,
+  TransferTo,
+  Refund,
+  Package,
+  Activity,
+  Participant,
+  CheckIn,
+  Pair,
+  UpdateAfterPay,
+  UpdateAfterTopUp,
+  UpdateAfterTransfer,
+  UpdateResource,
+}
