@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dld/pages/home/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -26,11 +27,13 @@ void main() async {
   Get.put(ThemeController(), tag: 'ThemeController');
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp();
   HttpOverrides.global = new MyHttpOverrides();
   await InitDepedencies().initPlatformState();
   await InitDepedencies().getVersionCode();
   await InitDepedencies().checkDeviceType();
   await InitDepedencies().initErrorWidget();
+  Get.put(AnalyticsService(), tag: 'analyticsService');
 
   // calculate token expired date
   String _accessToken = await SharedPref.getString(SharedPref.accessToken);
@@ -74,7 +77,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final BaseController _base = Get.find(tag: 'BaseController');
+  final AnalyticsService analytics = Get.find(tag: 'analyticsService');
 
   @override
   void initState() {
@@ -125,6 +128,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // debugShowCheckedModeBanner: widget.isDev,
       themeMode: ThemeMode.light,
       title: 'DLD POS',
+      navigatorObservers: [
+        analytics.getAnalyticsObserver(),
+      ],
       home: widget.page,
     );
   }

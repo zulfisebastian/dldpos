@@ -1,8 +1,7 @@
+import 'package:dld/constants/endpoints.dart';
 import 'log_interceptor.dart' as log;
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-
-import '../flavor_config.dart';
 import 'api_interceptor.dart';
 
 class DioModule with DioMixin implements Dio {
@@ -14,7 +13,7 @@ class DioModule with DioMixin implements Dio {
       receiveTimeout: Duration(seconds: 30 * 1000),
       followRedirects: true,
       receiveDataWhenStatusError: true,
-      baseUrl: FlavorConfig.instance.values.baseUrl,
+      baseUrl: Endpoint.baseUrl,
       headers: {'Accept': 'application/json'},
     );
 

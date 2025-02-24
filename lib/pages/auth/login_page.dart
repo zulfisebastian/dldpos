@@ -54,22 +54,20 @@ class _LoginPageState extends State<LoginPage> {
                       vertical: 16,
                     ),
                     child: Column(
+                      spacing: 16,
                       children: [
                         SizedBox(
-                          height: 80,
+                          height: 50,
                         ),
                         CustomInputForm(
-                          textEditingController: _login.email.value,
-                          title: "Email",
-                          hintText: "john@mail.com",
+                          textEditingController: _login.username.value,
+                          title: "Username",
+                          hintText: "Masukkan username",
                           errorMessage: "",
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (v) {
                             _login.checkDisabledForm();
                           },
-                        ),
-                        SizedBox(
-                          height: 16,
                         ),
                         CustomInputPass(
                           controller: _login.password.value,
@@ -80,9 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (v) {
                             _login.checkDisabledForm();
                           },
-                        ),
-                        SizedBox(
-                          height: 16,
                         ),
                         Obx(
                           () => CustomButton(

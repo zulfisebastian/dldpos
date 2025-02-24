@@ -30,9 +30,9 @@ class InitDepedencies {
     Map<String, dynamic>? message,
   }) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      "UPAH",
-      "UPAH",
-      channelDescription: "UPAH Notification",
+      "DLD",
+      "DLD",
+      channelDescription: "DLD Notification",
       color: Colors.green,
       priority: Priority.high,
       importance: Importance.max,

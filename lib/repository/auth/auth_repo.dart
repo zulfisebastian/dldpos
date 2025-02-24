@@ -1,5 +1,6 @@
 import '../../constants/endpoints.dart';
 import '../../models/auth/login_model.dart';
+import '../../models/auth/profile_model.dart';
 import '../../models/base/base_result.dart';
 import '../base/base_repo.dart';
 
@@ -13,20 +14,23 @@ class AuthRepo extends BaseRepo {
       case ResponseStatus.Success:
         return LoginResponse.fromJson(response.data);
       default:
-        return LoginResponse.fromJson(response.data);
+        return LoginResponse(
+          error: true,
+          message: response.errorMessage,
+        );
     }
   }
 
-  Future<LoginResponse> getProfile() async {
+  Future<ProfileResponse> getProfile() async {
     BaseResult response = await get(
       Endpoint.profile,
     );
     switch (response.status) {
       case ResponseStatus.Success:
-        return LoginResponse.fromJson(response.data);
+        return ProfileResponse.fromJson(response.data);
       default:
-        return LoginResponse(
-          status: 400,
+        return ProfileResponse(
+          error: true,
           message: response.errorMessage,
         );
     }

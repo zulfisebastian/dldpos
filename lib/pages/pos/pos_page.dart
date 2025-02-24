@@ -1,8 +1,9 @@
+import 'package:dld/controllers/pos/pos_controller.dart';
 import 'package:dld/controllers/theme/theme_controller.dart';
 import 'package:dld/utils/extensions.dart';
-import 'package:dld/widgets/components/ctoast.dart';
 import 'package:dld/widgets/components/customAppBar.dart';
 import 'package:dld/widgets/components/text/ctext.dart';
+import 'package:dld/widgets/sheets/sheet_choose_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,44 +15,49 @@ class PosPage extends StatefulWidget {
 class _PosPageState extends State<PosPage> {
   String inputString = "";
   String input = "";
-  int total = 0;
   bool isNewInput = true;
+  bool isFinish = false;
 
   void onButtonPressed(String value) {
     setState(() {
       if (value == "c") {
         input = "";
         inputString = "";
-        total = 0;
+        _posCtrl.total.value = 0;
+        isFinish = false;
         isNewInput = true;
       } else if (value == "+") {
         if (input.isNotEmpty) {
           inputString += value;
-          total += int.parse(input);
+          isFinish = false;
+          print(input);
+          if (!isNewInput) {
+            _posCtrl.total.value += int.parse(input);
+          }
           input = "";
-          isNewInput = true;
+          isNewInput = false;
         }
       } else if (value == "=") {
+        if (isNewInput) return;
         inputString += value;
         if (input.isNotEmpty) {
-          total += int.parse(input);
+          _posCtrl.total.value += int.parse(input);
           input = "0";
         }
-        inputString += total.toString();
-        input = total.toString();
+        inputString += _posCtrl.total.value.toString();
+        input = _posCtrl.total.value.toString();
+        isFinish = true;
         isNewInput = true;
-      } else if (value == "Pay") {
-        CToast.showWithoutCOntext(
-          "Success",
-          _theme.pureBlack.value,
-          _theme.pureWhite.value,
-        );
       } else {
-        inputString += value;
+        if (input == "" && value == "0") return;
+        if (input == "" && value == "00") return;
         if (isNewInput) {
+          inputString += value;
           input = value;
           isNewInput = false;
         } else {
+          inputString += value;
+          isFinish = false;
           input += value;
         }
       }
@@ -59,6 +65,13 @@ class _PosPageState extends State<PosPage> {
   }
 
   final ThemeController _theme = Get.find(tag: "ThemeController");
+  final PosController _posCtrl = Get.put(PosController(), tag: "PosController");
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.delete<PosController>(tag: "PosController");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +101,7 @@ class _PosPageState extends State<PosPage> {
                     ),
                   ),
                   Text(
-                    "${StringExt.thousandFormatter(total)}",
+                    "${StringExt.thousandFormatter(_posCtrl.total.value)}",
                     style: TextStyle(fontSize: 56, color: _theme.primary[5]),
                   ),
                 ],
@@ -108,43 +121,104 @@ class _PosPageState extends State<PosPage> {
                   Expanded(
                     child: Row(
                       children: [
-                        POSButton(text: "7", onTap: () => onButtonPressed("7")),
-                        POSButton(text: "8", onTap: () => onButtonPressed("8")),
-                        POSButton(text: "9", onTap: () => onButtonPressed("9")),
-                        POSButton(text: "c", onTap: () => onButtonPressed("c")),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        POSButton(text: "4", onTap: () => onButtonPressed("4")),
-                        POSButton(text: "5", onTap: () => onButtonPressed("5")),
-                        POSButton(text: "6", onTap: () => onButtonPressed("6")),
-                        POSButton(text: "+", onTap: () => onButtonPressed("+")),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        POSButton(text: "1", onTap: () => onButtonPressed("1")),
-                        POSButton(text: "2", onTap: () => onButtonPressed("2")),
-                        POSButton(text: "3", onTap: () => onButtonPressed("3")),
-                        POSButton(text: "=", onTap: () => onButtonPressed("=")),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        POSButton(text: "0", onTap: () => onButtonPressed("0")),
                         POSButton(
-                            text: "00", onTap: () => onButtonPressed("00")),
+                          text: "7",
+                          onTap: () => onButtonPressed("7"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "8",
+                          onTap: () => onButtonPressed("8"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "9",
+                          onTap: () => onButtonPressed("9"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "c",
+                          onTap: () => onButtonPressed("c"),
+                          isFinish: isFinish,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        POSButton(
+                          text: "4",
+                          onTap: () => onButtonPressed("4"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "5",
+                          onTap: () => onButtonPressed("5"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "6",
+                          onTap: () => onButtonPressed("6"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "+",
+                          onTap: () => onButtonPressed("+"),
+                          isFinish: isFinish,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        POSButton(
+                          text: "1",
+                          onTap: () => onButtonPressed("1"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "2",
+                          onTap: () => onButtonPressed("2"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "3",
+                          onTap: () => onButtonPressed("3"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "=",
+                          onTap: () => onButtonPressed("="),
+                          isFinish: isFinish,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        POSButton(
+                          text: "0",
+                          onTap: () => onButtonPressed("0"),
+                          isFinish: isFinish,
+                        ),
+                        POSButton(
+                          text: "00",
+                          onTap: () => onButtonPressed("00"),
+                          isFinish: isFinish,
+                        ),
                         POSButton(
                           text: "Pay",
-                          onTap: () => onButtonPressed("Pay"),
+                          onTap: () => {
+                            Get.bottomSheet(
+                              SheetChoosePayment(),
+                              isScrollControlled: true,
+                            )
+                          },
                           flex: 2,
+                          isFinish: isFinish,
                         ),
                       ],
                     ),
@@ -163,10 +237,12 @@ class POSButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final int flex;
+  final bool isFinish;
 
   POSButton({
     required this.text,
     required this.onTap,
+    required this.isFinish,
     this.flex = 1,
   });
 
@@ -190,7 +266,9 @@ class POSButton extends StatelessWidget {
                       ? HexColor.fromHex("8CCE82")
                       : checkTextType(text) == "CLEAR"
                           ? HexColor.fromHex("E84A57")
-                          : _theme.primary[4],
+                          : isFinish
+                              ? _theme.primary[4]
+                              : _theme.disabled.value,
             ),
             color: checkTextType(text) == "ANGKA"
                 ? HexColor.fromHex("262626").withAlpha(220)
@@ -198,7 +276,9 @@ class POSButton extends StatelessWidget {
                     ? HexColor.fromHex("8CCE82").withAlpha(220)
                     : checkTextType(text) == "CLEAR"
                         ? HexColor.fromHex("E84A57").withAlpha(220)
-                        : _theme.primary[4],
+                        : isFinish
+                            ? _theme.primary[4]
+                            : _theme.disabled.value,
           ),
           child: Center(
             child: checkTextType(text) == "ANGKA"

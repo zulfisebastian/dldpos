@@ -24,7 +24,7 @@ class ErrorPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/photo/logo.png",
+                "assets/images/logo.png",
                 height: 90,
                 width: 90,
               ),

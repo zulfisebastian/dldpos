@@ -1,6 +1,7 @@
 import '../../constants/endpoints.dart';
 import '../../models/base/base_result.dart';
 import '../../models/global/banner_model.dart';
+import '../../models/global/payment_model.dart';
 import '../base/base_repo.dart';
 
 class GlobalRepo extends BaseRepo {
@@ -10,18 +11,23 @@ class GlobalRepo extends BaseRepo {
       case ResponseStatus.Success:
         return BannerListResponse.fromJson(response.data);
       default:
-        return BannerListResponse.fromJson(response.data);
+        return BannerListResponse(
+          error: true,
+          message: response.errorMessage,
+        );
     }
   }
 
-  Future<BannerResponse> getBannerDetail(String id) async {
-    BaseResult response =
-        await get(Endpoint.bannerDetail.replaceAll("{id}", id));
+  Future<PaymentListResponse> getPayment() async {
+    BaseResult response = await get(Endpoint.payment);
     switch (response.status) {
       case ResponseStatus.Success:
-        return BannerResponse.fromJson(response.data);
+        return PaymentListResponse.fromJson(response.data);
       default:
-        return BannerResponse.fromJson(response.data);
+        return PaymentListResponse(
+          error: true,
+          message: response.errorMessage,
+        );
     }
   }
 }

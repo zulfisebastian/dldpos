@@ -7,7 +7,6 @@ import 'package:dld/widgets/components/customButton.dart';
 import 'package:dld/widgets/components/profile_menu.dart';
 import 'package:dld/widgets/components/text/ctext.dart';
 import '../../constants/endpoints.dart';
-import '../../controllers/home/home_controller.dart';
 import '../../controllers/theme/theme_controller.dart';
 import '../../widgets/components/ccached_image.dart';
 import '../../widgets/sheets/sheet_logout.dart';
@@ -22,7 +21,6 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   final ThemeController _theme = Get.find(tag: 'ThemeController');
   final BaseController _base = Get.find(tag: 'BaseController');
-  final HomeController _home = Get.find(tag: 'HomeController');
 
   @override
   Widget build(BuildContext context) {
@@ -96,24 +94,24 @@ class ProfilePageState extends State<ProfilePage> {
                                   url: Endpoint.defaultImageUrl,
                                 ),
                               ),
-                              Positioned(
-                                bottom: 2,
-                                right: 0,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/ic_camera.svg",
-                                    width: 32,
-                                  ),
-                                ),
-                              ),
+                              // Positioned(
+                              //   bottom: 2,
+                              //   right: 0,
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //       color: Colors.white,
+                              //       shape: BoxShape.circle,
+                              //       border: Border.all(
+                              //         color: Colors.white,
+                              //         width: 1,
+                              //       ),
+                              //     ),
+                              //     child: SvgPicture.asset(
+                              //       "assets/icons/ic_camera.svg",
+                              //       width: 32,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -122,7 +120,7 @@ class ProfilePageState extends State<ProfilePage> {
                         ),
                         Obx(
                           () => CText(
-                            _base.profile.value.name ?? "-",
+                            _base.profile.value.full_name ?? "-",
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
@@ -466,7 +464,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               SizedBox(
-                                height: 100,
+                                height: 400,
                               ),
                             ],
                           ),
@@ -505,29 +503,6 @@ class ProfilePageState extends State<ProfilePage> {
               //
             },
             title: "Data Pribadi",
-            titleColor: _theme.pureBlack.value,
-            icon: Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 20,
-            ),
-            isWarning: true,
-          ),
-          ProfileMenu(
-            onClick: () {
-              //
-            },
-            title: "Nomor Telepon",
-            titleColor: _theme.pureBlack.value,
-            icon: Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 20,
-            ),
-          ),
-          ProfileMenu(
-            onClick: () {
-              //
-            },
-            title: "Email",
             titleColor: _theme.pureBlack.value,
             icon: Icon(
               Icons.arrow_forward_ios_rounded,

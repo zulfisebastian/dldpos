@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "499959120144",
+    "project_id": "dld-pos-sys",
+    "storage_bucket": "dld-pos-sys.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499959120144:android:31e528c581403064bf2595",
+        "android_client_info": {
+          "package_name": "com.app.dld"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqec3A_yfuYKRyAiJ9ZMSCRyKineQr3OY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

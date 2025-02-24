@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import '../../controllers/base/base_controller.dart';
 import '../../utils/shared_pref.dart';
 
 class ApiInterceptor extends Interceptor {
@@ -25,7 +27,7 @@ class ApiInterceptor extends Interceptor {
   }
 
   _logoutExpiredToken() async {
-    // BaseController _main = Get.find(tag: 'BaseController');
-    // _main.logout();
+    BaseController _main = Get.find(tag: 'BaseController');
+    _main.logout();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dld/pages/transaction/transaction_page.dart';
 import 'package:dld/widgets/card/transaction_card.dart';
 import 'package:dld/widgets/components/cdivider.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,14 @@ class HomePageState extends State<HomePage> {
     HomeController(),
     tag: 'HomeController',
   );
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _home.getAllData(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +88,7 @@ class HomePageState extends State<HomePage> {
                                 Obx(
                                   () => CText(
                                     _base.profile.value.id != null
-                                        ? "Hi ${_base.profile.value.name!}"
+                                        ? "Hi ${_base.profile.value.full_name!}"
                                         : "-",
                                     color: _theme.pureBlack.value,
                                     fontSize: 14,
@@ -155,7 +164,7 @@ class HomePageState extends State<HomePage> {
                                       Obx(
                                         () => CText(
                                           _home.showBalance.value
-                                              ? "${StringExt.thousandFormatter(_home.calculateBalance())} K"
+                                              ? "IDR ${StringExt.thousandFormatter(_home.calculateBalance())}"
                                               : "****",
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -172,6 +181,7 @@ class HomePageState extends State<HomePage> {
                                             _home.showBalance.value
                                                 ? Icons.visibility_outlined
                                                 : Icons.visibility_off_outlined,
+                                            size: 16,
                                             color: _theme.pureBlack.value,
                                           ),
                                         ),
@@ -210,7 +220,9 @@ class HomePageState extends State<HomePage> {
                                 isActive: true,
                               ),
                               CMenu(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.to(TransactionPage());
+                                },
                                 icon: "ic_transaction",
                                 title: "History",
                                 isActive: true,
@@ -278,11 +290,13 @@ class HomePageState extends State<HomePage> {
                                 fontSize: 12,
                                 color: _theme.pureBlack.value.withAlpha(150),
                               ),
-                              CText(
-                                "${StringExt.thousandFormatter(_home.calculateTotalTrx())}",
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: _theme.pureBlack.value,
+                              Obx(
+                                () => CText(
+                                  "${StringExt.thousandFormatter(_home.calculateTotalTrx())}",
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: _theme.pureBlack.value,
+                                ),
                               ),
                             ],
                           ),
@@ -323,11 +337,13 @@ class HomePageState extends State<HomePage> {
                                 fontSize: 12,
                                 color: _theme.pureBlack.value.withAlpha(150),
                               ),
-                              CText(
-                                "${StringExt.thousandFormatter(_home.calculateTotalPayToday())} K",
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: _theme.pureBlack.value,
+                              Obx(
+                                () => CText(
+                                  "${StringExt.thousandFormatter(_home.calculateTotalPayToday() / 1000)} K",
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: _theme.pureBlack.value,
+                                ),
                               ),
                             ],
                           ),
@@ -368,11 +384,13 @@ class HomePageState extends State<HomePage> {
                                 fontSize: 12,
                                 color: _theme.pureBlack.value.withAlpha(150),
                               ),
-                              CText(
-                                "${StringExt.thousandFormatter(_home.calculateTotalPayAll())} K",
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: _theme.pureBlack.value,
+                              Obx(
+                                () => CText(
+                                  "${StringExt.thousandFormatter(_home.calculateTotalPayAll() / 1000)} K",
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: _theme.pureBlack.value,
+                                ),
                               ),
                             ],
                           ),
@@ -391,22 +409,24 @@ class HomePageState extends State<HomePage> {
                   ),
                   SizedBox(
                     height: 160,
-                    child: ListView.separated(
-                      itemCount: _home.banner.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
+                    child: Obx(
+                      () => ListView.separated(
+                        itemCount: _home.banner.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 16,
+                          );
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          var _data = _home.banner[index];
+                          return BannerCard(data: _data);
+                        },
                       ),
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          width: 16,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        var _data = _home.banner[index];
-                        return BannerCard(data: _data);
-                      },
                     ),
                   ),
                   Padding(
@@ -417,7 +437,7 @@ class HomePageState extends State<HomePage> {
                       title: CHeader(title: "Transaksi Terakhir"),
                       action: GestureDetector(
                         onTap: () {
-                          //
+                          Get.to(TransactionPage());
                         },
                         child: Row(
                           spacing: 4,
@@ -436,22 +456,24 @@ class HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  ListView.separated(
-                    itemCount: _home.transaction.length > 5
-                        ? 5
-                        : _home.transaction.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
+                  Obx(
+                    () => ListView.separated(
+                      itemCount: _home.transaction.length > 5
+                          ? 5
+                          : _home.transaction.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      physics: NeverScrollableScrollPhysics(),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return CDivider(height: 1);
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        var _data = _home.transaction[index];
+                        return TransactionCard(data: _data);
+                      },
                     ),
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return CDivider(height: 1);
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      var _data = _home.transaction[index];
-                      return TransactionCard(data: _data);
-                    },
                   ),
                   SizedBox(
                     height: 100,

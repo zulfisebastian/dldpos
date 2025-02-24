@@ -44,8 +44,8 @@ class _SplashPageState extends State<SplashPage> {
         width: OtherExt().getWidth(context),
         height: OtherExt().getHeight(context),
         child: Center(
-          child: SvgPicture.asset(
-            "assets/icons/logo.svg",
+          child: Image.asset(
+            "assets/images/logo.png",
             width: 200,
             fit: BoxFit.contain,
           ),

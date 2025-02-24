@@ -11,7 +11,7 @@ class LoginController extends GetxController {
   final BaseController _base = Get.find(tag: 'BaseController');
   final AuthRepo _repo = Get.put(AuthRepo());
 
-  Rx<TextEditingController> email = TextEditingController().obs;
+  Rx<TextEditingController> username = TextEditingController().obs;
   Rx<TextEditingController> password = TextEditingController().obs;
 
   @override
@@ -24,7 +24,7 @@ class LoginController extends GetxController {
 
   checkDisabledForm() {
     isDisabledForm.value =
-        email.value.text.length < 10 || password.value.text.length < 6;
+        username.value.text.length < 4 || password.value.text.length < 4;
     isDisabledForm.refresh();
   }
 
@@ -32,35 +32,19 @@ class LoginController extends GetxController {
     Get.dialog(Loading());
 
     var body = {
-      "email": email.value.text,
+      "username": username.value.text,
       "password": password.value.text,
     };
 
-    // var _resp = await _repo.postLogin(body);
-
+    var _resp = await _repo.postLogin(body);
     Get.back();
 
-    // if (_resp.status != null) {
-    //   if (_resp.status == 200) {
-    //     _base.setToken(_resp.data!.token!);
-    //     Get.off(HomePage());
-    //   } else {
-    //     CToast.showWithoutCOntext(
-    //       _resp.message!,
-    //       Colors.red,
-    //       Colors.white,
-    //       ToastGravity.TOP,
-    //     );
-    //   }
-    // }
-
-    if (email.value.text == 'admin@mail.com' &&
-        password.value.text == 'admin123') {
-      _base.setToken("2314091230940913091230912aioeoqi230");
+    if (_resp.error != null) {
+      _base.setToken(_resp.data!.access_token!);
       Get.off(HomePage());
     } else {
       CToast.showWithoutCOntext(
-        "Email / Password salah",
+        _resp.message!,
         Colors.red,
         Colors.white,
         ToastGravity.TOP,

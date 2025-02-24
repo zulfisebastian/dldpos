@@ -17,7 +17,7 @@ class BannerCard extends StatelessWidget {
     return CCachedImage(
       width: OtherExt().getWidth(context) * .8,
       height: 120,
-      url: data.image ?? Endpoint.defaultImageUrl,
+      url: data.asset_url ?? Endpoint.defaultImageUrl,
     );
   }
 }

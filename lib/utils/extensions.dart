@@ -73,9 +73,16 @@ class DateExt {
     return _result;
   }
 
+  static checkIsExpired(String date) {
+    DateTime targetDate =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(date).add(Duration(hours: 7));
+    DateTime now = DateTime.now();
+
+    return now.isAfter(targetDate);
+  }
+
   static calculateDiffDate(String date) {
-    DateTime a = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(date);
-    // a = a.add(Duration(hours: 7));
+    DateTime a = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
 
     final birthday = DateFormat("yyyy-MM-dd HH:mm:ss").parse(a.toString());
     final today = DateTime.now();

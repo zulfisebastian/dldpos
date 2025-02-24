@@ -44,7 +44,7 @@ class UpdateApp extends StatelessWidget {
                   height: 24,
                 ),
                 Image.asset(
-                  "assets/photo/img_update.png",
+                  "assets/images/img_update.png",
                 ),
                 SizedBox(
                   height: 24,

@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:dld/controllers/theme/theme_controller.dart';
+import 'package:dld/models/transaction/transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'extensions.dart';
 
@@ -16,6 +19,66 @@ String checkDataNullOrEmpty(
     }
   } else {
     return whenNullString;
+  }
+}
+
+String getPaymentIcon(TransactionModel data) {
+  if (data.payment_method == "QRIS" &&
+      (data.invoice == null ||
+          DateExt.checkIsExpired(data.invoice!.expired_in!))) {
+    return "assets/icons/ic_close.svg";
+  }
+
+  switch (data.payment_status) {
+    case "pending":
+      return "assets/icons/ic_pending.svg";
+    case "paid":
+      return "assets/icons/ic_success.svg";
+    default:
+      return "assets/icons/ic_close.svg";
+  }
+}
+
+String getPaymentString(TransactionModel data) {
+  if (data.payment_method == "QRIS" &&
+      (data.invoice == null ||
+          DateExt.checkIsExpired(data.invoice!.expired_in!))) {
+    return "Pembayaran Expired";
+  }
+
+  return {
+        "pending": "Menunggu Pembayaran",
+        "paid": "Pembayaran Berhasil"
+      }[data.payment_status] ??
+      "Pembayaran Gagal";
+}
+
+String getPaymentStringSimple(TransactionModel data) {
+  if (data.payment_method == "QRIS" &&
+      (data.invoice == null ||
+          DateExt.checkIsExpired(data.invoice!.expired_in!))) {
+    return "EXPIRED";
+  }
+
+  return {"pending": "PENDING", "paid": "PAID"}[data.payment_status] ??
+      "FAILED";
+}
+
+Color getPaymentColor(TransactionModel data) {
+  final ThemeController _theme = Get.find(tag: "ThemeController");
+  if (data.payment_method == "QRIS" &&
+      (data.invoice == null ||
+          DateExt.checkIsExpired(data.invoice!.expired_in!))) {
+    return _theme.error[1];
+  }
+
+  switch (data.payment_status) {
+    case "pending":
+      return _theme.warning[1];
+    case "paid":
+      return _theme.success[1];
+    default:
+      return _theme.error[1];
   }
 }
 

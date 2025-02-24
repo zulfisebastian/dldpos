@@ -1,18 +1,18 @@
 class LoginResponse {
   LoginModel? data;
   String? message;
-  int? status;
+  bool? error;
 
   LoginResponse({
     this.data,
     this.message,
-    this.status,
+    this.error,
   });
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? new LoginModel.fromJson(json['data']) : null;
     message = json['message'];
-    status = json['status'];
+    error = json['error'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,33 +21,25 @@ class LoginResponse {
       data['data'] = this.data?.toJson();
     }
     data['messages'] = this.message;
-    data['status'] = this.status;
+    data['error'] = this.error;
     return data;
   }
 }
 
 class LoginModel {
-  String? id;
-  String? name;
-  String? token;
+  String? access_token;
 
   LoginModel({
-    this.id,
-    this.name,
-    this.token,
+    this.access_token,
   });
 
   LoginModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    token = json['token'];
+    access_token = json['access_token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['token'] = this.token;
+    data['access_token'] = this.access_token;
     return data;
   }
 }

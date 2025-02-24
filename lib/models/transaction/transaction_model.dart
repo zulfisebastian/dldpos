@@ -1,62 +1,34 @@
-import '../base/meta_model.dart';
+import 'package:dld/models/transaction/invoice_model.dart';
 
 class TransactionListResponse {
-  TransactionResultResponse? data;
+  List<TransactionModel>? data;
   String? message;
-  int? status;
+  bool? error;
 
   TransactionListResponse({
     this.data,
     this.message,
-    this.status,
+    this.error,
   });
 
   TransactionListResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null
-        ? new TransactionResultResponse.fromJson(json['data'])
-        : null;
+    if (json['data'] != null) {
+      data = <TransactionModel>[];
+      json['data'].forEach((v) {
+        data?.add(new TransactionModel.fromJson(v));
+      });
+    }
     message = json['message'];
-    status = json['status'];
+    error = json['error'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data?.toJson();
+      data['data'] = this.data?.toList();
     }
     data['messages'] = this.message;
-    data['status'] = this.status;
-    return data;
-  }
-}
-
-class TransactionResultResponse {
-  List<TransactionModel>? results;
-  MetaModel? meta;
-
-  TransactionResultResponse({
-    this.results,
-    this.meta,
-  });
-
-  TransactionResultResponse.fromJson(Map<String, dynamic> json) {
-    if (json['results'] != null) {
-      results = <TransactionModel>[];
-      json['results'].forEach((v) {
-        results?.add(new TransactionModel.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? new MetaModel.fromJson(json['meta']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.results != null) {
-      data['data'] = this.results?.toList();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta?.toJson();
-    }
+    data['error'] = this.error;
     return data;
   }
 }
@@ -64,12 +36,12 @@ class TransactionResultResponse {
 class TransactionResponse {
   TransactionModel? data;
   String? message;
-  int? status;
+  bool? error;
 
   TransactionResponse({
     this.data,
     this.message,
-    this.status,
+    this.error,
   });
 
   TransactionResponse.fromJson(Map<String, dynamic> json) {
@@ -77,7 +49,7 @@ class TransactionResponse {
         ? new TransactionModel.fromJson(json['data'])
         : null;
     message = json['message'];
-    status = json['status'];
+    error = json['error'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,45 +58,53 @@ class TransactionResponse {
       data['data'] = this.data?.toJson();
     }
     data['messages'] = this.message;
-    data['status'] = this.status;
+    data['error'] = this.error;
     return data;
   }
 }
 
 class TransactionModel {
-  String? id;
+  String? number;
   String? type;
-  String? date;
-  int? value;
-  String? payment;
-  String? payment_at;
+  String? created_at;
+  int? total;
+  String? payment_method;
+  String? payment_status;
+  InvoiceModel? invoice;
 
   TransactionModel({
-    this.id,
+    this.number,
     this.type,
-    this.date,
-    this.value,
-    this.payment,
-    this.payment_at,
+    this.created_at,
+    this.total,
+    this.payment_method,
+    this.payment_status,
+    this.invoice,
   });
 
   TransactionModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    number = json['number'];
     type = json['type'];
-    date = json['date'];
-    value = json['value'];
-    payment = json['payment'];
-    payment_at = json['payment_at'];
+    created_at = json['created_at'];
+    total = json['total'];
+    payment_method = json['payment_method'];
+    payment_status = json['payment_status'];
+    invoice = json['invoice'] != null
+        ? new InvoiceModel.fromJson(json['invoice'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['number'] = this.number;
     data['type'] = this.type;
-    data['date'] = this.date;
-    data['value'] = this.value;
-    data['payment'] = this.payment;
-    data['payment_at'] = this.payment_at;
+    data['total'] = this.total;
+    data['created_at'] = this.created_at;
+    data['payment_method'] = this.payment_method;
+    data['payment_status'] = this.payment_status;
+    if (this.invoice != null) {
+      data['invoice'] = this.invoice?.toJson();
+    }
     return data;
   }
 }

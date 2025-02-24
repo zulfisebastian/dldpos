@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
-import 'package:dld/models/auth/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as lc;
 import 'package:dld/repository/auth/auth_repo.dart';
+import '../../models/auth/profile_model.dart';
 import '../../pages/auth/login_page.dart';
 import '../../utils/shared_pref.dart';
 import '../../widgets/components/ctoast.dart';
@@ -176,27 +176,20 @@ class BaseController extends GetxController {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
-  Rx<LoginModel> profile = LoginModel().obs;
+  Rx<ProfileModel> profile = ProfileModel().obs;
   getProfile() async {
-    // var _resp = await _authRepo.getProfile();
+    var _resp = await _authRepo.getProfile();
 
-    profile.value = LoginModel(
-      id: "1",
-      name: "Admin",
-      token: "2134031401304kao230412r0j",
-    );
-    profile.refresh();
-
-    //   if (_resp.status == 200) {
-    //     profile.value = _resp.data!;
-    //     profile.refresh();
-    //   } else {
-    //     CToast.showWithoutCOntext(
-    //       _resp.message!,
-    //       Colors.red,
-    //       Colors.white,
-    //       ToastGravity.TOP,
-    //     );
-    //   }
+    if (!_resp.error!) {
+      profile.value = _resp.data!;
+      profile.refresh();
+    } else {
+      CToast.showWithoutCOntext(
+        _resp.message!,
+        Colors.red,
+        Colors.white,
+        ToastGravity.TOP,
+      );
+    }
   }
 }
