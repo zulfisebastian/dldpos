@@ -187,13 +187,21 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                     CDivider(height: 1),
                     _buildTransactionInfo(
                       "Date",
-                      DateExt.reformat(widget.data.created_at!,
-                          "yyyy-MM-ddTHH:mm:ss", "EEE, dd MMM yyyy"),
+                      DateExt.reformat(
+                          DateTime.parse(widget.data.created_at!)
+                              .add(Duration(hours: 7))
+                              .toString(),
+                          "yyyy-MM-dd HH:mm:ss",
+                          "EEE, dd MMM yyyy"),
                     ),
                     _buildTransactionInfo(
                       "Time",
-                      DateExt.reformat(widget.data.created_at!,
-                          "yyyy-MM-ddTHH:mm:ss", "HH:mm:ss"),
+                      DateExt.reformat(
+                          DateTime.parse(widget.data.created_at!)
+                              .add(Duration(hours: 7))
+                              .toString(),
+                          "yyyy-MM-dd HH:mm:ss",
+                          "HH:mm:ss"),
                     ),
                     _buildTransactionInfo(
                       "Payment Method",
@@ -202,7 +210,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                     _buildPaymentStatus(),
                     _buildTransactionInfo(
                       "Total Payment",
-                      "${StringExt.thousandFormatter(widget.data.total! / 1000)} K",
+                      "${StringExt.formatRupiah(widget.data.total!, "Rp. ", "")}",
                       color: _theme.success[2],
                       fontSize: 18,
                     ),

@@ -68,7 +68,7 @@ class _SheetChoosePaymentState extends State<SheetChoosePayment> {
                         color: _theme.pureBlack.value,
                       ),
                       CText(
-                        "${StringExt.thousandFormatter(_posCtrl.total.value)} K",
+                        "${StringExt.formatRupiah(_posCtrl.total.value, "Rp. ", "")}",
                         color: _theme.success[2],
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

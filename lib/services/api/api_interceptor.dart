@@ -28,6 +28,6 @@ class ApiInterceptor extends Interceptor {
 
   _logoutExpiredToken() async {
     BaseController _main = Get.find(tag: 'BaseController');
-    _main.logout();
+    _main.refreshToken();
   }
 }

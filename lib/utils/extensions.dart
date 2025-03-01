@@ -17,9 +17,9 @@ class StringExt {
     return paths[paths.length - 1];
   }
 
-  static String formatRupiah(number) {
+  static String formatRupiah(number, prefix, suffix) {
     var _formattedNumber = NumberFormat("#,##0", "id_ID").format(number);
-    return "IDR $_formattedNumber";
+    return "$prefix$_formattedNumber$suffix";
   }
 
   static String hideMiddleCode(String code) {

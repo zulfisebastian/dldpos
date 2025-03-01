@@ -51,7 +51,7 @@ class PosController extends GetxController {
   submitPay() async {
     Get.dialog(Loading());
     var body = {
-      "total": total.value * 1000,
+      "total": total.value,
       "payment_method": selectedPayment.value,
     };
 

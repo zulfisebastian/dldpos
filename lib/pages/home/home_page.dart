@@ -256,7 +256,7 @@ class HomePageState extends State<HomePage> {
                       ),
                       children: [
                         Container(
-                          width: 150,
+                          width: 190,
                           decoration: BoxDecoration(
                             color: _theme.pureWhite.value,
                             borderRadius: BorderRadius.circular(10),
@@ -303,7 +303,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 16),
                         Container(
-                          width: 150,
+                          width: 200,
                           decoration: BoxDecoration(
                             color: _theme.pureWhite.value,
                             borderRadius: BorderRadius.circular(10),
@@ -339,8 +339,12 @@ class HomePageState extends State<HomePage> {
                               ),
                               Obx(
                                 () => CText(
-                                  "${StringExt.thousandFormatter(_home.calculateTotalPayToday() / 1000)} K",
-                                  fontSize: 26,
+                                  "${StringExt.formatRupiah(
+                                    _home.calculateTotalPayToday(),
+                                    "Rp. ",
+                                    "",
+                                  )}",
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: _theme.pureBlack.value,
                                 ),
@@ -350,7 +354,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 16),
                         Container(
-                          width: 150,
+                          width: 200,
                           decoration: BoxDecoration(
                             color: _theme.pureWhite.value,
                             borderRadius: BorderRadius.circular(10),
@@ -386,8 +390,12 @@ class HomePageState extends State<HomePage> {
                               ),
                               Obx(
                                 () => CText(
-                                  "${StringExt.thousandFormatter(_home.calculateTotalPayAll() / 1000)} K",
-                                  fontSize: 26,
+                                  "${StringExt.formatRupiah(
+                                    _home.calculateTotalPayAll(),
+                                    "Rp. ",
+                                    "",
+                                  )}",
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: _theme.pureBlack.value,
                                 ),

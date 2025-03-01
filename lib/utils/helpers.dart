@@ -23,24 +23,24 @@ String checkDataNullOrEmpty(
 }
 
 String getPaymentIcon(TransactionModel data) {
-  if (data.payment_method == "QRIS" &&
+  if (data.payment_status == "pending" &&
+      data.payment_method == "QRIS" &&
       (data.invoice == null ||
           DateExt.checkIsExpired(data.invoice!.expired_in!))) {
     return "assets/icons/ic_close.svg";
   }
 
-  switch (data.payment_status) {
-    case "pending":
-      return "assets/icons/ic_pending.svg";
-    case "paid":
-      return "assets/icons/ic_success.svg";
-    default:
-      return "assets/icons/ic_close.svg";
-  }
+  const statusIcons = {
+    "pending": "assets/icons/ic_pending.svg",
+    "paid": "assets/icons/ic_success.svg",
+  };
+
+  return statusIcons[data.payment_status] ?? "assets/icons/ic_close.svg";
 }
 
 String getPaymentString(TransactionModel data) {
-  if (data.payment_method == "QRIS" &&
+  if (data.payment_status == "pending" &&
+      data.payment_method == "QRIS" &&
       (data.invoice == null ||
           DateExt.checkIsExpired(data.invoice!.expired_in!))) {
     return "Pembayaran Expired";
@@ -54,7 +54,8 @@ String getPaymentString(TransactionModel data) {
 }
 
 String getPaymentStringSimple(TransactionModel data) {
-  if (data.payment_method == "QRIS" &&
+  if (data.payment_status == "pending" &&
+      data.payment_method == "QRIS" &&
       (data.invoice == null ||
           DateExt.checkIsExpired(data.invoice!.expired_in!))) {
     return "EXPIRED";
@@ -66,7 +67,8 @@ String getPaymentStringSimple(TransactionModel data) {
 
 Color getPaymentColor(TransactionModel data) {
   final ThemeController _theme = Get.find(tag: "ThemeController");
-  if (data.payment_method == "QRIS" &&
+  if (data.payment_status == "pending" &&
+      data.payment_method == "QRIS" &&
       (data.invoice == null ||
           DateExt.checkIsExpired(data.invoice!.expired_in!))) {
     return _theme.error[1];

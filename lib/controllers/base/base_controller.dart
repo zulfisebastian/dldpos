@@ -40,6 +40,10 @@ class BaseController extends GetxController {
     );
   }
 
+  refreshToken() async {
+    await _authRepo.postRefreshToken();
+  }
+
   @override
   void onReady() {
     setCamera();

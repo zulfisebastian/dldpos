@@ -21,6 +21,21 @@ class AuthRepo extends BaseRepo {
     }
   }
 
+  Future<LoginResponse> postRefreshToken() async {
+    BaseResult response = await post(
+      Endpoint.refresh,
+    );
+    switch (response.status) {
+      case ResponseStatus.Success:
+        return LoginResponse.fromJson(response.data);
+      default:
+        return LoginResponse(
+          error: true,
+          message: response.errorMessage,
+        );
+    }
+  }
+
   Future<ProfileResponse> getProfile() async {
     BaseResult response = await get(
       Endpoint.profile,

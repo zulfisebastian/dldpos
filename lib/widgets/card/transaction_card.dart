@@ -108,7 +108,7 @@ class TransactionCard extends StatelessWidget {
                     ],
                   ),
                   CText(
-                    "${StringExt.thousandFormatter(data.total! / 1000)} K",
+                    "${StringExt.thousandFormatter(data.total!)}",
                     fontSize: 16,
                     color: _theme.success[2],
                   ),

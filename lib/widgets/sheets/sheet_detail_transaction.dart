@@ -252,7 +252,7 @@ class _SheetDetailTransactionState extends State<SheetDetailTransaction> {
                         color: _theme.pureBlack.value.withAlpha(120),
                       ),
                       CText(
-                        "${StringExt.thousandFormatter(widget.data.total! / 1000)} K",
+                        "${StringExt.formatRupiah(widget.data.total! / 1000, "Rp. ", "")}",
                         color: _theme.success[2],
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
