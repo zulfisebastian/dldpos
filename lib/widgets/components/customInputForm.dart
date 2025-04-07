@@ -89,6 +89,7 @@ class _CustomInputFormState extends State<CustomInputForm> {
                   FilteringTextInputFormatter.allow(RegExp('[A-Z0-9]')),
               ];
     return Column(
+      spacing: 8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.title != "")
@@ -129,18 +130,21 @@ class _CustomInputFormState extends State<CustomInputForm> {
               ),
               errorStyle: GoogleFonts.plusJakartaSans(height: 0),
               enabledBorder: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
                 borderSide: BorderSide(
                   color:
                       widget.readOnly ? _theme.neutral[1] : _theme.line.value,
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
                 borderSide: BorderSide(
                   color:
                       widget.readOnly ? _theme.neutral[1] : _theme.primary[0],
                 ),
               ),
               errorBorder: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
                 borderSide: BorderSide(
                   color: widget.readOnly ? _theme.neutral[1] : _theme.error[0],
                 ),

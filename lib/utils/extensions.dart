@@ -12,6 +12,181 @@ class OtherExt {
 }
 
 class StringExt {
+  static String findPhone(noHP) {
+    var result = "";
+    if (noHP.length < 4) {
+      return "";
+    } else {
+      var kode = noHP.substring(0, 4);
+      switch (kode) {
+        case "0811":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0812":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0813":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0821":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0822":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0823":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0851":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0852":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0853":
+          result = "assets/images/img_logo_telkomsel.png";
+          break;
+        case "0814":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0815":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0816":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0854":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0855":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0856":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0857":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0858":
+          result = "assets/images/img_logo_im3.png";
+          break;
+        case "0881":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0882":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0883":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0884":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0885":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0886":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0887":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0888":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0889":
+          result = "assets/images/img_logo_smartfren.png";
+          break;
+        case "0817":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0818":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0819":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0859":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0877":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0878":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0879":
+          result = "assets/images/img_logo_xl.png";
+          break;
+        case "0895":
+          result = "assets/images/img_logo_3.png";
+          break;
+        case "0896":
+          result = "assets/images/img_logo_3.png";
+          break;
+        case "0897":
+          result = "assets/images/img_logo_3.png";
+          break;
+        case "0898":
+          result = "assets/images/img_logo_3.png";
+          break;
+        case "0899":
+          result = "assets/images/img_logo_3.png";
+          break;
+        case "0832":
+          result = "assets/images/img_logo_axis.png";
+          break;
+        case "0833":
+          result = "assets/images/img_logo_axis.png";
+          break;
+        case "0838":
+          result = "assets/images/img_logo_axis.png";
+          break;
+        default:
+          result = "";
+      }
+      return result;
+    }
+  }
+
+  static String getPostpaidPhone(code) {
+    switch (code) {
+      case "im3":
+        return "ISATP";
+      case "telkomsel":
+        return "HALO";
+      case "axis":
+        return "AXIS";
+      case "3":
+        return "THREE";
+      case "xl":
+        return "XPLOR";
+      case "smartfren":
+        return "SMART";
+      default:
+        return "HALO";
+    }
+  }
+
+  static String getProviderPhone(code) {
+    switch (code) {
+      case "im3":
+        return "INDOSAT";
+      case "telkomsel":
+        return "Telkomsel";
+      case "axis":
+        return "AXIS";
+      case "3":
+        return "Three";
+      case "xl":
+        return "XL";
+      case "smartfren":
+        return "SmartFren";
+      default:
+        return "Telkomsel";
+    }
+  }
+
   static String enumName(String enumToString) {
     List<String> paths = enumToString.split(".");
     return paths[paths.length - 1];

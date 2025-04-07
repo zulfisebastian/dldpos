@@ -11,4 +11,13 @@ class Endpoint {
   static const String payment = '/api/payment-channel';
   static const String transaction = '/api/transactions';
   static const String transactionById = '/api/transactions/{id}';
+
+  //withdraw
+  static const String withdraw = '/api/withdraw';
+  static const String withdrawBalance = '/api/withdraw-balance';
+  static const String bank = '/api/get-banks';
+  static const String myBank = '/api/banks';
+  static const String createBank = '/api/banks';
+  static const String updateBank = '/api/banks/{id}';
+  static const String deleteBank = '/api/banks/{id}';
 }

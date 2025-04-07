@@ -1,4 +1,8 @@
+import 'package:dld/pages/tagihan/tagihan_listrik_post_page.dart';
+import 'package:dld/pages/tagihan/tagihan_listrik_token_page.dart';
+import 'package:dld/pages/tagihan/tagihan_pulsa_pra_page.dart';
 import 'package:dld/pages/transaction/transaction_page.dart';
+import 'package:dld/pages/withdraw/withdraw_page.dart';
 import 'package:dld/widgets/card/transaction_card.dart';
 import 'package:dld/widgets/components/cdivider.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +20,7 @@ import '../../widgets/card/banner_card.dart';
 import '../../widgets/components/cheader.dart';
 import '../../widgets/components/cheader_section.dart';
 import '../pos/pos_page.dart';
+import '../tagihan/tagihan_pulsa_post_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -228,16 +233,81 @@ class HomePageState extends State<HomePage> {
                                 isActive: true,
                               ),
                               CMenu(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.to(WithdrawPage());
+                                },
                                 icon: "ic_withdraw",
                                 title: "Tarik",
-                                isActive: false,
+                                isActive: true,
                               ),
                               CMenu(
                                 onTap: () {},
                                 icon: "ic_report",
                                 title: "Report",
                                 isActive: false,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: OtherExt().getWidth(context),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: _theme.line.value,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: OtherExt().getWidth(context),
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            runAlignment: WrapAlignment.spaceBetween,
+                            spacing: 16,
+                            children: [
+                              CMenu(
+                                onTap: () {
+                                  Get.to(TagihanPulsaPostPage());
+                                },
+                                icon: "ic_menu_pulsa_post",
+                                title: "Bayar Pulsa",
+                                isActive: true,
+                              ),
+                              CMenu(
+                                onTap: () {
+                                  Get.to(TagihanPulsaPraPage());
+                                },
+                                icon: "ic_menu_pulsa_pra",
+                                title: "Beli Pulsa",
+                                isActive: true,
+                              ),
+                              CMenu(
+                                onTap: () {
+                                  Get.to(TagihanListrikTokenPage());
+                                },
+                                icon: "ic_menu_pln_token",
+                                title: "Beli Listrik",
+                                isActive: true,
+                              ),
+                              CMenu(
+                                onTap: () {
+                                  Get.to(TagihanListrikPostPage());
+                                },
+                                icon: "ic_menu_pln_meter",
+                                title: "Bayar Listrik",
+                                isActive: true,
                               ),
                             ],
                           ),
@@ -529,9 +599,8 @@ class CMenu extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
         width: 56,
-        height: 56,
         child: Column(
-          spacing: 5,
+          spacing: 8,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             isActive
@@ -553,6 +622,9 @@ class CMenu extends StatelessWidget {
               spacing: 1,
               color: isActive ? _theme.pureBlack.value : _theme.disabled.value,
               fontWeight: FontWeight.w500,
+              align: TextAlign.center,
+              lineHeight: 1.4,
+              overflow: TextOverflow.visible,
             ),
           ],
         ),
